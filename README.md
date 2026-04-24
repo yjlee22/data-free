@@ -60,8 +60,10 @@ $$\bar{\mathbf{v}}_r = \frac{1}{M} \sum_{m=1}^{M} \mathbf{v}_r^m$$
 
 We define two quantities from the local task vectors:
 
-- **Shift** — overall training progress: $\text{shift}_r = \|\bar{\mathbf{v}}_r\|_2$
-- **Dispersion** — client-level disagreement: $\text{disp}_r = \frac{1}{M} \sum_{m=1}^{M} \|\mathbf{v}_r^m - \bar{\mathbf{v}}_r\|_2$
+- **Shift** — overall training progress:
+$$\text{shift}_r = \|\bar{\mathbf{v}}_r\|_2$$
+- **Dispersion** — client-level disagreement:
+$$\text{disp}_r = \frac{1}{M} \sum_{m=1}^{M} \|\mathbf{v}_r^m - \bar{\mathbf{v}}_r\|_2$$
 
 A **composite statistic** jointly captures both training progress and client-level disagreement:
 
