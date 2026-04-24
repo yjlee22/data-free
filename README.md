@@ -52,30 +52,44 @@ The core intuition leverages the **task vector concept**: the proposed framework
 
 At each global round $r$, the **local task vector** of the $m$-th client is defined as:
 
-$$\mathbf{v}_r^m = \theta_r^m - \theta_0$$
+```math
+\mathbf{v}_r^m = \theta_r^m - \theta_0
+```
 
 The **centroid task vector** captures the consensus direction of local updates:
 
-$$\bar{\mathbf{v}}_r = \frac{1}{M} \sum_{m=1}^{M} \mathbf{v}_r^m$$
+```math
+\bar{\mathbf{v}}_r = \frac{1}{M} \sum_{m=1}^{M} \mathbf{v}_r^m
+```
 
 We define two quantities from the local task vectors:
 
 - **Shift** — overall training progress:
-$$\text{shift}_r = \|\bar{\mathbf{v}}_r\|_2$$
+```math
+\text{shift}_r = \|\bar{\mathbf{v}}_r\|_2
+```
 - **Dispersion** — client-level disagreement:
-$$\text{disp}_r = \frac{1}{M} \sum_{m=1}^{M} \|\mathbf{v}_r^m - \bar{\mathbf{v}}_r\|_2$$
+```math
+\text{disp}_r = \frac{1}{M} \sum_{m=1}^{M} \|\mathbf{v}_r^m - \bar{\mathbf{v}}_r\|_2
+```
 
 A **composite statistic** jointly captures both training progress and client-level disagreement:
 
-$$\phi_r = \text{shift}_r \times \left(1 + \frac{\text{disp}_r}{\text{shift}_r + \epsilon}\right)$$
+```math
+\phi_r = \text{shift}_r \times \left(1 + \frac{\text{disp}_r}{\text{shift}_r + \epsilon}\right)
+```
 
 To reduce noise, an **exponential moving average (EMA)** is applied with $\alpha = \frac{2}{\rho + 1}$:
 
-$$\tilde{\phi}_r = \alpha \phi_r + (1 - \alpha)\tilde{\phi}_{r-1}$$
+```math
+\tilde{\phi}_r = \alpha \phi_r + (1 - \alpha)\tilde{\phi}_{r-1}
+```
 
 Training is halted when the **relative change** of the smoothed statistic falls below threshold $\tau$ for $\rho$ consecutive rounds:
 
-$$\Delta_r = \frac{|\tilde{\phi}_r - \tilde{\phi}_{r-1}|}{|\tilde{\phi}_{r-1}| + \epsilon}, \qquad r^* = \min\{r \mid \kappa_r \geq \rho\}$$
+```math
+\Delta_r = \frac{|\tilde{\phi}_r - \tilde{\phi}_{r-1}|}{|\tilde{\phi}_{r-1}| + \epsilon}, \qquad r^* = \min\{r \mid \kappa_r \geq \rho\}
+```
 
 The framework requires **only two hyperparameters** ($\tau$, $\rho$) and operates entirely on server-side local model parameters, making it fully compatible with the FL model-only transmission paradigm.
 
